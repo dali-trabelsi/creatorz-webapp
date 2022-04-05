@@ -1,0 +1,30 @@
+#upload {
+  opacity: 0;
+}
+
+#upload-label {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+}
+
+.image-area {
+  border: 2px dashed rgba(126, 126, 126, 0.7);
+  padding: 1rem;
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+}
+
+.image-preview {
+  display: block;
+  min-height: 200px;
+  width: 70%;
+  height: auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

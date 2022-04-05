@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import jwtDecode from 'jwt-decode';
+import { UserRole } from 'src/app/core/enums/user-roles';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login-page',
@@ -13,12 +17,16 @@ export class LoginPageComponent implements OnInit {
   serverMsg = '';
   serverMsgType = 'success';
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    @Inject(Router) private router: Router
+  ) {
     this.JSON = JSON;
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      user: ['learner'],
+      userType: ['learner'],
     });
   }
 
@@ -28,13 +36,20 @@ export class LoginPageComponent implements OnInit {
     this.serverMsg = '';
     const body = this.loginForm.value;
     this.http
-      .post<{ message: string }>(
-        `https://creatorz.herokuapp.com/api/v1/auth/${body.user}/signin`,
+      .post<{ message: string; accessToken: string; id: string }>(
+        environment.apiUrl + `/auth/${body.userType}/signin`,
         body
       )
       .subscribe({
-        next: (x: { message: string }) => {
-          console.log('Observer got a next value: ');
+        next: (x: { message: string; accessToken: string; id: string }) => {
+          localStorage.setItem('accessToken', x.accessToken);
+          const decodedToken = jwtDecode(x.accessToken) as { role: UserRole };
+          localStorage.setItem('user_id', x.id);
+          if (decodedToken.role === UserRole.LEARNER) {
+            this.router.navigate(['courses/list']);
+          } else if (decodedToken.role === UserRole.TEACHER) {
+            this.router.navigate(['course/create']);
+          }
           this.serverMsg = x.message;
           this.serverMsgType = 'success';
         },
@@ -43,7 +58,7 @@ export class LoginPageComponent implements OnInit {
           this.serverMsg = err.error.message;
           this.serverMsgType = 'danger';
         },
-        complete: () => console.log('Observer got a complete notification'),
+        complete: () => {},
       });
   }
 

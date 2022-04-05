@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-signup-page',
@@ -16,7 +17,7 @@ export class SignupPageComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.JSON = JSON;
     this.signupForm = this.fb.group({
-      user: ['learner'],
+      userType: ['learner'],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       fname: ['', [Validators.required, Validators.minLength(2)]],
@@ -49,7 +50,7 @@ export class SignupPageComponent implements OnInit {
     };
     this.http
       .post<{ message: string }>(
-        `https://creatorz.herokuapp.com/api/v1/auth/${body.user}/signup`,
+        `${environment.apiUrl}/auth/${body.userType}/signup`,
         body
       )
       .subscribe({

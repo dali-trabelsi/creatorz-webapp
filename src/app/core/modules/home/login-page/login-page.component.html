@@ -10,13 +10,13 @@
                 <form [formGroup]="loginForm">
                     <div class="mb-5 d-flex justify-content-center">
                         <div class="form-check form-check-inline">
-                            <input type="radio" class="btn-check" name="user" id="loginLearnerRadio" autocomplete="off"
-                                formControlName="user" value="learner" />
+                            <input type="radio" class="btn-check" name="userType" id="loginLearnerRadio"
+                                autocomplete="off" formControlName="userType" value="learner" />
                             <label class="btn btn-outline-info" for="loginLearnerRadio">Learner</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" class="btn-check" name="user" id="loginTeacherRadio" autocomplete="off"
-                                formControlName="user" value="teacher" />
+                            <input type="radio" class="btn-check" name="userType" id="loginTeacherRadio"
+                                autocomplete="off" formControlName="userType" value="teacher" />
                             <label class="btn btn-outline-info" for="loginTeacherRadio">Teacher</label>
                         </div>
                     </div>

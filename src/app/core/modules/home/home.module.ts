@@ -1,3 +1,4 @@
+import { LoginGuard } from './../../guards/login-guard';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -28,5 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
   ],
+  exports: [NavBarComponent, FooterComponent],
+  providers: [LoginGuard],
 })
 export class HomeModule {}
