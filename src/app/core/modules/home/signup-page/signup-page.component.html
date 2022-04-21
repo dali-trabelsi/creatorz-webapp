@@ -31,10 +31,10 @@
                             <div *ngIf="fieldIsInvalid('fname')" class="form-text text-danger">Nom invalide</div>
                         </div>
                         <div class="col-6 mb-3">
-                            <label for="signupInputPassword1" class="form-label">Prénom</label>
+                            <label class="form-label">Prénom</label>
                             <input type="text" class="form-control" [class.is-valid]="signupForm.get('lname')?.valid"
-                                [class.is-invalid]="fieldIsInvalid('lname')" id="signupInputPassword1"
-                                formControlName="lname" autocomplete="off" [value]="signupForm.get('lname')" />
+                                [class.is-invalid]="fieldIsInvalid('lname')" formControlName="lname" autocomplete="off"
+                                [value]="signupForm.get('lname')" />
                             <div *ngIf="fieldIsInvalid('lname')" class="form-text text-danger">Prénom invalide</div>
                         </div>
                     </div>
@@ -49,11 +49,11 @@
                             <div *ngIf="fieldIsInvalid('email')" class="form-text text-danger">Email is invalide</div>
                         </div>
                         <div class="col-6 mb-3">
-                            <label for="signupInputPassword1" class="form-label">Password</label>
+                            <label class="form-label">Password</label>
                             <input type="password" class="form-control"
                                 [class.is-valid]="signupForm.get('password')?.valid"
-                                [class.is-invalid]="fieldIsInvalid('password')" id="signupInputPassword1"
-                                formControlName="password" autocomplete="off" [value]="signupForm.get('password')" />
+                                [class.is-invalid]="fieldIsInvalid('password')" formControlName="password"
+                                autocomplete="off" [value]="signupForm.get('password')" />
                             <div *ngIf="fieldIsInvalid('password')" class="form-text text-danger">Password is invalide
                             </div>
                         </div>

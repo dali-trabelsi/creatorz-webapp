@@ -1,5 +1,6 @@
+import { SharedModule } from './../../../shared/shared.module';
 import { LoginGuard } from './../../guards/login-guard';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +13,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +24,15 @@ import { HttpClientModule } from '@angular/common/http';
     LoginPageComponent,
     SignupPageComponent,
     ContactPageComponent,
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule,
+    FormsModule,
   ],
   exports: [NavBarComponent, FooterComponent],
   providers: [LoginGuard],

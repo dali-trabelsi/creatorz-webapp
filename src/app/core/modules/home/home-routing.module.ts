@@ -10,6 +10,9 @@ import { ListCoursesComponent } from '../courses/learner/list-courses/list-cours
 import { AuthGuard } from '../../guards/auth-guard';
 import { CreateCourseComponent } from '../courses/teacher/create-course/create-course.component';
 import { LoginGuard } from '../../guards/login-guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CourseDetailsComponent } from '../courses/course-details/course-details.component';
+import { AddCourseContentComponent } from '../courses/teacher/add-course-content/add-course-content.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -31,6 +34,30 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       roles: [UserRole.TEACHER],
+    },
+  },
+  {
+    path: 'course/details/:course_id',
+    component: CourseDetailsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserRole.LEARNER],
+    },
+  },
+  {
+    path: 'course/edit/:course_id',
+    component: AddCourseContentComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserRole.TEACHER],
+    },
+  },
+  {
+    path: 'user/profile',
+    component: UserProfileComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserRole.LEARNER, UserRole.TEACHER],
     },
   },
 ];
