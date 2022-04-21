@@ -1,0 +1,51 @@
+<home-page-nav-bar></home-page-nav-bar>
+
+<main>
+
+    <div *ngIf="user" style="margin-top: 120px;">
+        <div class="d-flex justify-content-end px-5">
+            <button class="btn btn-secondary mx-5" (click)="isEditing=!isEditing">
+                {{isEditing?"Voir":"Modifier"}}
+                mon profile</button>
+        </div>
+        <h1 class="text-center"> Bienvenue, <b>{{user.fname}}</b> !</h1>
+        <div class="d-flex justify-content-center">
+            <div style="position: relative;">
+                <edit-field-btns field="avatar" [isControlInvalid]="!fieldsEditing.avatar.isValid"
+                    (editDetails)="editDetails($event)" *ngIf="isEditing" [isFilePicker]="true"
+                    (filePick)="imgPicker($event)" [isEditing]="fieldsEditing.avatar.isEditing">
+                </edit-field-btns>
+                <img class="avatar shadow" [src]="fieldsEditing.avatar.base64 || user.avatar" alt="">
+            </div>
+        </div>
+        <br>
+        <div class="d-flex flex-column align-items-center justify-content-center">
+            <h3>role: {{user?.role}}</h3>
+            <div style="position: relative;" class="d-flex">
+                <edit-field-btns field="dob" [isControlInvalid]="!fieldsEditing.dob.isValid"
+                    (editDetails)="editDetails($event)" *ngIf="isEditing" [isEditing]="fieldsEditing.dob.isEditing">
+                </edit-field-btns>
+                <h2 class="mx-3"><b>Date de naissance:</b> </h2>
+                <h2 *ngIf="!fieldsEditing.dob.isEditing"> {{user.dob |date}}</h2>
+                <input type="date" [(ngModel)]="fieldsEditing.dob.value" #ctrl="ngModel"
+                    *ngIf="fieldsEditing.dob.isEditing" class="form-control" [value]="fieldsEditing.dob.value">
+            </div>
+            <div style="position: relative;" class="d-flex">
+                <edit-field-btns field="phone" [isControlInvalid]="!fieldsEditing.phone.isValid"
+                    (editDetails)="editDetails($event)" *ngIf="isEditing" [isEditing]="fieldsEditing.phone.isEditing">
+                </edit-field-btns>
+                <h2 class="mx-3"><b>Num Tel: </b>
+                </h2>
+                <h2 *ngIf="!fieldsEditing.phone.isEditing"> {{user.phone}}</h2>
+                <input type="text" [(ngModel)]="fieldsEditing.phone.value" #ctrl="ngModel"
+                    *ngIf="fieldsEditing.phone.isEditing" class="form-control">
+            </div>
+
+            <h2><b><u> Adresse </u></b></h2>
+            <h4><b>Pays: </b>{{user.address.country}}</h4>
+            <h4><b>Ville: </b>{{user.address.city}}</h4>
+            <h4><b>Rue: </b>{{user.address.street}}</h4>
+            <h4><b>Code Postal: </b>{{user.address.postcode}}</h4>
+        </div>
+    </div>
+</main>
