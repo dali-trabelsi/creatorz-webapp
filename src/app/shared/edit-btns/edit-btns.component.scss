@@ -1,0 +1,30 @@
+.button {
+  position: absolute;
+  right: -25px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 100px;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.success {
+  background: #00c853;
+  top: -5px;
+}
+.success:hover {
+  background: #00b64c;
+}
+
+.cancel {
+  background: #c80000;
+  top: 15px;
+}
+.cancel:hover {
+  background: #b60000;
+}

@@ -1,0 +1,16 @@
+<label *ngIf="!isEditing" (click)="isFilePicker ? filePicker.click() : editDetails.emit({field: field, action:'start'})"
+    class="button success">
+    <fa-icon [icon]="faPen"></fa-icon>
+</label>
+
+<button *ngIf="isEditing" (click)="editDetails.emit({field: field, action:'submit'})" class="button success"
+    [disabled]="isControlInvalid">
+    <fa-icon [icon]="faCheck"></fa-icon>
+</button>
+
+<label *ngIf="isEditing" (click)="editDetails.emit({field: field, action:'cancel'})" class="button cancel">
+    <fa-icon [icon]="faClose"></fa-icon>
+</label>
+
+<input #filePicker style="display: none;" type="file" accept=".png, .jpg, .jpeg" onclick="this.value = null"
+    (change)="filePick.emit($any($event).target.files[0])" />
