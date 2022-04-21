@@ -1,4 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CoursesService } from 'src/app/core/services/courses/course.service';
 
 @Component({
   selector: 'app-create-course',
@@ -7,9 +10,31 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 })
 export class CreateCourseComponent implements OnInit {
   cdr: ChangeDetectorRef;
-  constructor(cdr: ChangeDetectorRef) {
+
+  isLinear = false;
+  courseForm: FormGroup;
+
+  constructor(
+    cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private service: CoursesService,
+    private _snackBar: MatSnackBar
+  ) {
     this.cdr = cdr;
+
+    this.courseForm = this.fb.group({
+      title: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(10)]),
+      ],
+      description: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(10)]),
+      ],
+    });
   }
+
+  ngOnInit(): void {}
 
   sections: any[] = [];
 
@@ -30,18 +55,15 @@ export class CreateCourseComponent implements OnInit {
     console.log(this.sections);
   }
 
-  richTextDataModel: any;
-
-  ngOnInit(): void {}
-
-  imgSelectPreview: any;
+  thumbnailImgBase64: string | ArrayBuffer | null | undefined;
+  thumbnailImgFile: any;
 
   selectImageFile(event: any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-
+      this.thumbnailImgFile = event.target.files[0];
       reader.onload = (e) => {
-        this.imgSelectPreview = e?.target?.result;
+        this.thumbnailImgBase64 = e?.target?.result;
         this.cdr.detectChanges();
       };
       reader.readAsDataURL(event.target.files[0]);
@@ -49,6 +71,29 @@ export class CreateCourseComponent implements OnInit {
   }
 
   create() {
-    console.log(this.richTextDataModel);
+    if (this.courseForm.invalid || !this.thumbnailImgFile) {
+      this._snackBar.open('Champs invalides', 'Ok', {
+        duration: 3000,
+      });
+      return;
+    }
+    const formData = new FormData();
+    formData.append('thumbnail', this.thumbnailImgFile);
+    formData.append('title', this.courseForm.value.title);
+    formData.append('description', this.courseForm.value.description);
+    this.service.createCourse(formData).subscribe({
+      next: (res) => {
+        console.log(res);
+        this._snackBar.open('Cours crée', 'Ok', {
+          duration: 3000,
+        });
+      },
+      error: (err) => {
+        console.log(err);
+        this._snackBar.open('Error', 'Ok', {
+          duration: 3000,
+        });
+      },
+    });
   }
 }
