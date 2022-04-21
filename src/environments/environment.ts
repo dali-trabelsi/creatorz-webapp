@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:4545/api/v1',
+  userAvatarImgPlaceholder: './assets/img/avatars/avatar-placeholder.png',
 };
 
 /*
