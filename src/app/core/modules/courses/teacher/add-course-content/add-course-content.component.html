@@ -1,0 +1,39 @@
+<home-page-nav-bar></home-page-nav-bar>
+
+<main class="">
+    <section class="portfolio-block">
+        <div class="container">
+            <div class="heading">
+                <h1 class="text-center" style="margin-top: 50px;">Ajouter du contenu au cours</h1>
+            </div>
+            <div class="row d-flex justify-content-center">
+
+                <mat-stepper orientation="vertical" [linear]="false" #stepper>
+                    <mat-step>
+                        <ng-template matStepLabel>1ère étape: Comprendre</ng-template>
+                        <div class="w-50">
+                            <course-file-upload (uploaded)="uploadedFile($event)"></course-file-upload>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>2ème étape: Définir</ng-template>
+
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>3ème étape: Diverger</ng-template>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>4ème étape: Décider</ng-template>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>5ème étape: Prototyper</ng-template>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>6ème étape: Tester</ng-template>
+                    </mat-step>
+                </mat-stepper>
+            </div>
+        </div>
+    </section>
+</main>
+<home-page-footer></home-page-footer>
