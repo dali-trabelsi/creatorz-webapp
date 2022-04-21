@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { UserRole } from '../../enums/user-roles';
 import { TokenStorageService } from './token-storage.service';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 const AUTH_API_URL = 'http://localhost:8080/api/auth/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -15,7 +16,8 @@ const httpOptions = {
 export class AuthService extends TokenStorageService {
   constructor(
     private http: HttpClient,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
+    @Inject(Router) private router: Router
   ) {
     super();
   }
@@ -54,18 +56,15 @@ export class AuthService extends TokenStorageService {
         resolve(false);
       }
       this.http
-        .post(
-          environment.apiUrl + '/auth/verifyToken/' + decodedToken.role,
-          {},
-          {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${accessToken}`,
-            }),
-          }
-        )
-        .subscribe((res) => {
-          resolve(decodedToken.role);
+        .post(environment.apiUrl + '/auth/verifyToken/' + decodedToken.role, {})
+        .subscribe({
+          next: (res) => {
+            resolve(decodedToken.role);
+          },
+          error: (err) => {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          },
         });
     });
   }
