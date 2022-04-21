@@ -5,12 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 
-import { authInterceptorProviders } from './core/interceptor/auth.interceptor';
+import { MainAuthInterceptorProviders } from './core/interceptor/auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, CoreModule],
-  providers: [authInterceptorProviders],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    CoreModule,
+    BrowserAnimationsModule,
+    FontAwesomeModule,
+  ],
+  providers: [MainAuthInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -9,7 +9,7 @@ import { TokenStorageService } from '../services/auth/token-storage.service';
 import { Observable } from 'rxjs';
 const TOKEN_HEADER_KEY = 'Authorization';
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class MainAuthInterceptor implements HttpInterceptor {
   constructor(private token: TokenStorageService) {}
   intercept(
     req: HttpRequest<any>,
@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     let authReq = req;
     const token = this.token.getToken();
-    if (token != null) {
+    if (token) {
       authReq = req.clone({
         headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token),
       });
@@ -25,6 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq);
   }
 }
-export const authInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+
+export const MainAuthInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: MainAuthInterceptor, multi: true },
 ];
