@@ -2,12 +2,31 @@
 
 <main class="">
     <section class="portfolio-block">
-        <div class="container">
+        <div class="container d-flex flex-column align-items-center">
             <div class="heading">
                 <h1 class="text-center" style="margin-top: 50px;">Détails du cours</h1>
             </div>
-            <div class="row">
+            <div class="row w-50">
+                <div class="d-flex align-items-center">
+                    <h3 class="m-0 p-0"><b>Instructeur:</b> </h3>
+                    <img [src]="course.teacher.avatar" alt="" class="avatar mx-3" style="margin-left: 50px;">
+                    <h3 class="m-0">{{course.teacher.fname}}</h3>
+                </div>
 
+                <h3 class="my-3"><b>Date Créé:</b> {{course.createdAt | date}}</h3>
+
+                <h1 class="text-center mt-5">
+                    <h3 style="text-decoration: none;" class="btn btn-secondary m-0">
+                        {{course.title}}</h3>
+                </h1>
+                <div class="card border-0"><a href="#"><img class="card-img-top scale-on-hover" [src]="course.thumbnail"
+                            alt="Card Image" style="display: block; height: 200px;"></a>
+                    <div class="card-body">
+                        <p class="text-muted card-text">
+                            {{course.description}}
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -5,10 +5,7 @@ import { environment } from 'src/environments/environment';
 import jwtDecode from 'jwt-decode';
 
 const API_URL = environment.apiUrl;
-const token = jwtDecode(localStorage.getItem('accessToken') || '') as {
-  role: string;
-};
-
+const token = { role: '' };
 @Injectable({
   providedIn: 'root',
 })

@@ -48,8 +48,9 @@ export class AuthService extends TokenStorageService {
     return new Promise((resolve, reject) => {
       if (!accessToken) {
         resolve(false);
+        return;
       }
-      const decodedToken = jwt_decode(String(accessToken)) as {
+      const decodedToken = jwt_decode(accessToken) as {
         role: UserRole;
       };
       if (roles && !roles.includes(decodedToken.role)) {

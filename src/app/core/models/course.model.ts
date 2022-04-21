@@ -6,4 +6,6 @@ export type CourseModel = {
   description: string;
   thumbnail: string;
   teacher: TeacherModel;
+  createdAt: string;
+  updatedAt: string;
 };

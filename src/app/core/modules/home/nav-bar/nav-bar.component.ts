@@ -26,6 +26,10 @@ export class NavBarComponent implements OnInit {
     if (!['/', '/login', '/signup', '/contact'].includes(url)) {
       this.isLoggedIn = true;
     }
+    this.auth.getToken() && this.fetchUserDetails();
+  }
+
+  fetchUserDetails() {
     this.userService.getUserInfo().subscribe({
       next: (res: UserModel) => {
         this.user = res;
