@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import jwtDecode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 import { UserRole } from 'src/app/core/enums/user-roles';
 import { environment } from 'src/environments/environment';
 
@@ -43,7 +43,7 @@ export class LoginPageComponent implements OnInit {
       .subscribe({
         next: (x: { message: string; accessToken: string; id: string }) => {
           localStorage.setItem('accessToken', x.accessToken);
-          const decodedToken = jwtDecode(x.accessToken) as { role: UserRole };
+          const decodedToken = jwt_decode(x.accessToken) as { role: UserRole };
           localStorage.setItem('user_id', x.id);
           if (decodedToken.role === UserRole.LEARNER) {
             this.router.navigate(['courses/list']);

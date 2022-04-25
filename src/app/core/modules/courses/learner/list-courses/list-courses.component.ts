@@ -3,11 +3,8 @@ import { environment } from 'src/environments/environment';
 import { CourseModel } from './../../../../models/course.model';
 import { CoursesService } from 'src/app/core/services/courses/course.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import jwtDecode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
-const token = jwtDecode(localStorage.getItem('accessToken') || '') as {
-  role: string;
-};
 @Component({
   selector: 'app-list-courses',
   templateUrl: './list-courses.component.html',
@@ -15,7 +12,10 @@ const token = jwtDecode(localStorage.getItem('accessToken') || '') as {
 })
 export class ListCoursesComponent implements OnInit {
   courses: CourseModel[] = [];
-  userRole = token.role;
+  token = jwt_decode(localStorage.getItem('accessToken') || '') as {
+    role: string;
+  };
+  userRole = this.token.role;
 
   constructor(
     private courseService: CoursesService,
