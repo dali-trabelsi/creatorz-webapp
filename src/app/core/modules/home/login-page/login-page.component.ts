@@ -46,14 +46,11 @@ export class LoginPageComponent implements OnInit {
           const decodedToken = jwtDecode(x.accessToken) as { role: UserRole };
           localStorage.setItem('user_id', x.id);
           if (decodedToken.role === UserRole.LEARNER) {
-            this.router.navigate(['courses/list']).then(() => {
-              this.reloadCurrentRoute('courses/list');
-            });
+            this.router.navigate(['courses/list']);
           } else if (decodedToken.role === UserRole.TEACHER) {
-            this.router.navigate(['course/create']).then(() => {
-              this.reloadCurrentRoute('course/create');
-            });
+            this.router.navigate(['course/create']);
           }
+          location.reload();
           this.serverMsg = x.message;
           this.serverMsgType = 'success';
         },
@@ -71,11 +68,5 @@ export class LoginPageComponent implements OnInit {
       this.loginForm.get(field)?.invalid &&
       (this.loginForm.get(field)?.dirty || this.loginForm.get(field)?.touched)
     );
-  }
-
-  reloadCurrentRoute(route: string) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([route]);
   }
 }

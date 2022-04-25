@@ -114,6 +114,7 @@ export class UserProfileComponent implements OnInit {
             const formData = new FormData();
             formData.append('avatar', this.fieldsEditing.avatar.file);
             this.update(formData);
+            location.reload();
             break;
           default:
             break;
