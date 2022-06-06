@@ -13,6 +13,7 @@ export class CoursesService {
 
   token = jwt_decode(localStorage.getItem('accessToken') || '') as {
     role: string;
+    _id?: string;
   };
   userRole = this.token.role;
 
@@ -25,6 +26,6 @@ export class CoursesService {
   }
 
   getAllCourses(): Observable<any> {
-    return this.http.get(API_URL + '/course/list/all');
+    return this.http.get(API_URL + '/course/list/teacher/' + this.token._id);
   }
 }

@@ -13,6 +13,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { FileUploadComponent } from './teacher/file-upload/file-upload.component';
 import { AddCourseContentComponent } from './teacher/add-course-content/add-course-content.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AddCourseContentComponent } from './teacher/add-course-content/add-cour
     MatButtonModule,
     MatInputModule,
     MatSnackBarModule,
+    FontAwesomeModule,
   ],
 })
 export class CoursesModule {}

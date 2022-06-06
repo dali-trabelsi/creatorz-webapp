@@ -14,6 +14,8 @@ import { SignupPageComponent } from './signup-page/signup-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AboutUsPageComponent } from './about-us-page/about-us-page.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     SignupPageComponent,
     ContactPageComponent,
     UserProfileComponent,
+    PageNotFoundComponent,
+    AboutUsPageComponent,
   ],
   imports: [
     CommonModule,

@@ -6,54 +6,95 @@
             <div class="heading">
                 <h1 class="text-center" style="margin-top: 50px;">Ajouter du contenu au cours</h1>
             </div>
-            <div class="row d-flex justify-content-center">
-
-                <mat-stepper orientation="vertical" [linear]="false" #stepper>
-                    <mat-step>
-                        <ng-template matStepLabel>1ère étape: Comprendre</ng-template>
-
-                        <ng-template #content>
-                            <div class="my-5 bg-light">
-                                <h4><b> Description de l'étape:</b></h4>
-                                <p> Dans cette étape Mauris accumsan lobortis tincidunt. Vestibulum eget urna egestas,
-                                    feugiat tortor ac, ornare nulla. Nulla in sapien leo. Mauris a nisl elit. Aenean
-                                    quis maximus mauris. Maecenas non velit ac tellus lobortis porta vitae et felis.
-                                    Proin maximus a arcu a aliquam.</p>
-                            </div>
-                            <div class=" d-flex">
-                                <h3 class="mb-0 mx-5"><b> Nouveau Chapitre: </b></h3>
-                                <div class="w-50">
-                                    <course-file-upload (uploaded)="uploadedFile($event)"></course-file-upload>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-container *ngTemplateOutlet="content"></ng-container>
-
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>2ème étape: Définir</ng-template>
-                        <ng-container *ngTemplateOutlet="content"></ng-container>
-
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>3ème étape: Diverger</ng-template>
-                        <ng-container *ngTemplateOutlet="content"></ng-container>
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>4ème étape: Décider</ng-template>
-                        <ng-container *ngTemplateOutlet="content"></ng-container>
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>5ème étape: Prototyper</ng-template>
-                        <ng-container *ngTemplateOutlet="content"></ng-container>
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>6ème étape: Tester</ng-template>
-                        <ng-container *ngTemplateOutlet="content"></ng-container>
-                    </mat-step>
+            <div class="row d-flex justify-content-center" style="min-height: 14vh;">
+                <mat-stepper *ngIf="course" orientation="vertical" [linear]="false" #sectionStepper>
+                    <ng-container *ngFor="let section of course.sections; let i=index;">
+                        <mat-step>
+                            <ng-template matStepLabel>étape {{i+1}}: {{section.title}}</ng-template>
+                            <ng-container *ngTemplateOutlet="sectionContent; context: {section:section}">
+                            </ng-container>
+                        </mat-step>
+                    </ng-container>
                 </mat-stepper>
             </div>
         </div>
     </section>
 </main>
 <home-page-footer></home-page-footer>
+
+<ng-template #sectionContent let-section="section">
+    <div class="my-5 bg-light">
+        <h4><b>Description de l'étape:</b></h4>
+        <p> Dans cette étape Mauris accumsan lobortis tincidunt. Vestibulum eget urna egestas,
+            feugiat tortor ac, ornare nulla. Nulla in sapien leo. Mauris a nisl elit. Aenean
+            quis maximus mauris. Maecenas non velit ac tellus lobortis porta vitae et felis.
+            Proin maximus a arcu a aliquam.</p>
+        {{section?._id}}
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <button mat-raised-button style="justify-self: end;" (click)="addChapterComponent(section)">
+            <span class="mx-2">Nouveau Chapitre </span>
+            <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+    </div>
+
+    <mat-stepper orientation="horizontal" [linear]="false" #courseStepper>
+        <ng-container *ngFor="let chapter of section.chapters; let i=index;">
+            <mat-step>
+                <ng-template matStepLabel>{{i+1}}</ng-template>
+                <h3 class="mb-0 mx-5"><b> Chapitre {{i+1}}: </b></h3>
+                <br>
+
+                <div
+                    style="margin-left: 50px;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <div class="mb-3">
+                        <mat-form-field appearance="fill" style="width: 300px;">
+                            <mat-label>Titre</mat-label>
+                            <input matInput placeholder="">
+                        </mat-form-field>
+                    </div>
+                    <div class="mb-3">
+                        <mat-form-field appearance="fill" style="width: 400px;">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput placeholder="" class="no-resize" style="min-height: 70px;"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <mat-stepper orientation="vertical" [linear]="false" #lessonStepper>
+                    <ng-container *ngFor="let lesson of chapter.lessons; let i=index;">
+                        <mat-step>
+                            <ng-template matStepLabel>Lesson {{i+1}}: {{lesson.title}}</ng-template>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <div class="w-50">
+                                    <course-file-upload (uploaded)="uploadedFile($event)"></course-file-upload>
+                                </div>
+                            </div>
+                        </mat-step>
+                    </ng-container>
+                </mat-stepper>
+
+                <div class="d-flex align-items-center justify-content-center">
+                    <button mat-raised-button (click)="addLessonComponent(chapter)">
+                        <span class="mx-2">Nouvelle Leçon</span>
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                    </button>
+                </div>
+
+
+                <br>
+                <div class="d-flex align-items-center justify-content-center">
+                    <button mat-raised-button color="primary">
+                        <fa-icon [icon]="faSave"></fa-icon>
+                        <span class="mx-2"> Sauvegarder </span>
+                    </button>
+                </div>
+            </mat-step>
+        </ng-container>
+    </mat-stepper>
+
+
+
+</ng-template>

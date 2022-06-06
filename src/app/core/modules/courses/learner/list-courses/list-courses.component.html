@@ -5,15 +5,17 @@
             <div class="heading">
                 <h1 style="margin-top: 50px;" class="text-center">Liste des cours</h1>
             </div>
-            <div class="row">
+            <div class="row" style="min-height: 14vh;">
                 <div class="col-md-6 col-lg-4" *ngFor="let course of courses">
                     <h1 class="text-center">
                         <a style="text-decoration: none;" class="btn btn-secondary"
                             [href]="userRole==='TEACHER'?'/course/edit/'+course._id:'/course/details/'+course._id">
                             {{course.title}}</a>
                     </h1>
-                    <div class="card border-0"><a href="#"><img class="card-img-top scale-on-hover"
-                                [src]="course.thumbnail" alt="Card Image" style="display: block; height: 200px;"></a>
+                    <div class="card border-0">
+                        <a [href]="userRole==='TEACHER'?'/course/edit/'+course._id:'/course/details/'+course._id">
+                            <img class="card-img-top scale-on-hover" [src]="course.thumbnail" alt="Card Image"
+                                style="display: block; height: 200px;"></a>
                         <div class="card-body">
                             <p class="text-muted card-text">
                                 {{course.description}}

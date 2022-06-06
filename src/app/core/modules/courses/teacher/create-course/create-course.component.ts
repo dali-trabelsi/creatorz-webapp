@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CoursesService } from 'src/app/core/services/courses/course.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class CreateCourseComponent implements OnInit {
     cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private service: CoursesService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.cdr = cdr;
 
@@ -82,8 +84,8 @@ export class CreateCourseComponent implements OnInit {
     formData.append('title', this.courseForm.value.title);
     formData.append('description', this.courseForm.value.description);
     this.service.createCourse(formData).subscribe({
-      next: (res) => {
-        console.log(res);
+      next: (course) => {
+        this.router.navigate(['course/edit/' + course._id]);
         this._snackBar.open('Cours crée', 'Ok', {
           duration: 3000,
         });

@@ -11,33 +11,24 @@
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
             </ul>
-            <button *ngIf="!isLoggedIn" class="btn btn-primary" type="button"
-                style="margin: 0 15px; height: 50px; width: 100px; font-size: 19px" routerLink="/login">
-                Login</button>
-            <button class="btn btn-primary" type="button"
-                style="margin: 0 35px; height: 50px; width: 105.3906px; font-size: 19px" routerLink="/signup"
-                *ngIf="!isLoggedIn">
-                Signup</button>
-            <button class="btn btn-primary" type="button"
-                style="margin: 0 15px; height: 50px; width: 120.5156px; font-size: 19px" routerLink="/contact"
-                *ngIf="!isLoggedIn">
+            <span *ngIf="!isLoggedIn" class="navLink" routerLink="/login">
+                Login
+            </span>
+            <span class="navLink" routerLink="/signup" *ngIf="!isLoggedIn">
+                Signup
+            </span>
+            <span class="navLink" routerLink="/contact" *ngIf="!isLoggedIn">
                 Contact
-            </button>
-            <button class="btn btn-primary" type="button"
-                style="margin: 0 15px; height: 50px; width: 120.5156px; font-size: 19px" routerLink="/course/create"
-                *ngIf="isLoggedIn && userRole===UserRole.TEACHER">
+            </span>
+            <span class="navLink" routerLink="/course/create" *ngIf="isLoggedIn && userRole===UserRole.TEACHER">
                 Create
-            </button>
-            <button class="btn btn-primary" type="button"
-                style="margin: 0 15px; height: 50px; width: 120.5156px; font-size: 19px" routerLink="/courses/list"
-                *ngIf="isLoggedIn">
+            </span>
+            <span class="navLink" routerLink="/courses/list" *ngIf="isLoggedIn">
                 Cours
-            </button>
-            <button class="btn btn-primary" type="button"
-                style="margin: 0 15px; height: 50px; width: 120.5156px; font-size: 19px" routerLink="/"
-                *ngIf="isLoggedIn" (click)="auth.signOut()">
+            </span>
+            <span class="navLink" routerLink="/" *ngIf="isLoggedIn" (click)="auth.signOut()">
                 Logout
-            </button>
+            </span>
 
             <img [src]="this.user?.avatar" alt="" class="avatar" *ngIf="isLoggedIn"
                 (click)="router.navigate(['/user/profile'])" style="margin-left: 50px;">
